@@ -1,0 +1,27 @@
+#app {
+    margin: 20px;
+}
+
+header {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.logout {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    cursor: pointer;
+}
+
+.segment.transaction-form-segment {
+    width: 40%;
+    min-width: 300px;
+}
+
+.segment.home-login-segment {
+    width: 50%;
+    min-width: 400px;
+    margin-right: auto;
+    margin-left: auto;
+}
