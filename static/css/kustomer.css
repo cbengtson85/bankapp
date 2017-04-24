@@ -25,3 +25,19 @@ header {
     margin-right: auto;
     margin-left: auto;
 }
+
+.pagination img {
+    height: 25px;
+    position: relative;
+    top: 5px;
+}
+
+#transactionPagination {
+    position: relative;
+    bottom: 15px;
+}
+
+.pagination .inactive {
+    opacity: .3;
+    cursor: default;
+}

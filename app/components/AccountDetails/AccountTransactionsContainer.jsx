@@ -3,26 +3,37 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {AccountTransactions} from 'app/components/AccountDetails';
+import * as ACTIONS from 'app/actions/appActions';
 
 class AccountTransactionsContainer extends React.Component {
     render() {
-        const {transactionList} = this.props;
+        const {transactionList, pageIndex, paginationChange} = this.props;
         return (
-            <AccountTransactions transactionList={transactionList} />
+            <AccountTransactions transactionList={transactionList} pageIndex={pageIndex}
+                paginationChange={paginationChange}/>
         )
     }
 }
 
 if(process.env.NODE_ENV !== 'production') {
     AccountTransactionsContainer.propTypes = {
-        transactionList : PropTypes.array
+        transactionList : PropTypes.array,
+        pageIndex : PropTypes.number,
+        paginationChange : PropTypes.func
     };
 }
 
 const mapStateToProps = state => {
     return {
-        transactionList : state.transactionList
+        transactionList : state.transactionList,
+        pageIndex : state.pageIndex
     }
 };
 
-export default connect(mapStateToProps)(AccountTransactionsContainer);
+const mapDispatchToProps = dispatch => {
+    return {
+        paginationChange : id => {dispatch(ACTIONS.paginationChange(id))}
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountTransactionsContainer);

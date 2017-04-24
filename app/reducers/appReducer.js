@@ -15,10 +15,10 @@ const clearFormObject = () => {
 };
 
 const buildTransactionObject = (type, amount, description, date, oldState) => {
-    let lastTransaction = getLastTransaction(oldState.transactionList, oldState.transactionEntries);
-    let oldBalance = lastTransaction ? lastTransaction.balance : 0;
-    let amt = type === config.withdrawText ? amount*-1 : amount;
-    let newBalance = oldBalance + amt;
+    const lastTransaction = getLastTransaction(oldState.transactionList, oldState.transactionEntries);
+    const oldBalance = lastTransaction ? lastTransaction.balance : 0;
+    const amt = type === config.withdrawText ? amount*-1 : amount;
+    const newBalance = oldBalance + amt;
     return {
         date : date,
         description : description,
@@ -30,8 +30,8 @@ const buildTransactionObject = (type, amount, description, date, oldState) => {
 const getNewStateAfterTransaction = (transactionList, date, entry, entries) => {
     let tarr = transactionList.concat();
     tarr.unshift(date);
-    let newEntries = {...entries, [date] : entry}
-    let obj = {transactionList : tarr, transactionEntries : newEntries, transactionSuccess : true};
+    const newEntries = {...entries, [date] : entry}
+    const obj = {transactionList : tarr, transactionEntries : newEntries, transactionSuccess : true, pageIndex : 1};
     return {...clearFormObject(), ...obj};
 }
 
@@ -40,24 +40,26 @@ const appReducer = (state = {}, action) => {
         case ACTIONS.CLEAR_FORM:
             return {...state, ...clearFormObject()};
         case ACTIONS.INPUT_TYPING: {
-            let obj = {withdrawError : false, transactionSuccess : false, [action.key] : action.value}
+            const obj = {withdrawError : false, transactionSuccess : false, [action.key] : action.value}
             return {...state, ...obj};
         }
         case ACTIONS.LOGIN_NEW: {
-            let newState = {...initialState, currentUser : action.email};
+            const newState = {...initialState, currentUser : action.email, pageIndex : 1};
             return {...state, ...newState};
         }
         case ACTIONS.LOGIN_EXISTING: {
-            let newState = {...action.loadedState, currentUser : action.email};
+            const newState = {...action.loadedState, currentUser : action.email, pageIndex : 1};
             return {...state, ...newState};
         }
         case ACTIONS.LOGOUT:
             return {...state, ...initialState};
         case ACTIONS.INVALID_TRANSACTION:
             return {...state, withdrawError : true};
+        case ACTIONS.PAGINATION_CHANGE:
+            return {...state, pageIndex : state.pageIndex + action.pageChange};
         case ACTIONS.SUBMIT_TRANSACTION: {
-            let entry = buildTransactionObject(action.whichType, action.amount, action.description, action.date, state);
-            let newState = getNewStateAfterTransaction(state.transactionList, action.date, entry, state.transactionEntries);
+            const entry = buildTransactionObject(action.whichType, action.amount, action.description, action.date, state);
+            const newState = getNewStateAfterTransaction(state.transactionList, action.date, entry, state.transactionEntries);
             return {...state, ...newState};
         }
         default:

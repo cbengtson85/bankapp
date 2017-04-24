@@ -33,3 +33,6 @@ Steps to run the app (Node v5 or greater and NPM must be installed):
 6) execute unit tests
 
         npm test
+
+
+Know Issue: Each tab will be it's own instance of the app as sessionStorage is being used which is per tab.

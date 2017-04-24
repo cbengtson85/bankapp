@@ -8,7 +8,8 @@ const initialState = {
     transactionSuccess : false,
     loginText : '',
     amountText : '',
-    descriptionText : ''
+    descriptionText : '',
+    pageIndex: 1
 }
 
 export const getLoadedState = () => {

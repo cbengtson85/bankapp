@@ -8,6 +8,7 @@ export const LOGIN_EXISTING = 'LOGIN_EXISTING';
 export const SUBMIT_TRANSACTION = 'SUBMIT_TRANSACTION';
 export const INVALID_TRANSACTION = 'INVALID_TRANSACTION';
 export const LOGOUT = 'LOGOUT';
+export const PAGINATION_CHANGE = 'PAGINATION_CHANGE';
 
 export const clearForm = actionCreator(CLEAR_FORM);
 export const inputTyping = actionCreator(INPUT_TYPING, 'key', 'value');
@@ -16,6 +17,7 @@ const loginExisting = actionCreator(LOGIN_EXISTING, 'email', 'loadedState');
 export const logout = actionCreator(LOGOUT);
 const invalidTransaction = actionCreator(INVALID_TRANSACTION);
 const submitTransactionValid = actionCreator(SUBMIT_TRANSACTION, 'whichType', 'amount', 'description', 'date');
+export const paginationChange = actionCreator(PAGINATION_CHANGE, 'pageChange');
 
 export const login = email => {
     return dispatch => {
