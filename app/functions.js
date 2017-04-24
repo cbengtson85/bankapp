@@ -2,7 +2,7 @@ import formatDate from 'dateformat';
 import config from 'app/config';
 import * as ACTIONS from 'app/actions/appActions';
 
-export const actionCreator = (type, ...argNames) => {
+export function actionCreator(type, ...argNames) {
     return function(...args) {
         let action = {
             type
@@ -12,7 +12,7 @@ export const actionCreator = (type, ...argNames) => {
         });
         return action;
     }
-};
+}
 
 export const formatCurrency = amount => {
     let amt = amount;

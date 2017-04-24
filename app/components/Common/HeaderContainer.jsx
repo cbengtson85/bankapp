@@ -9,7 +9,7 @@ import {Logout} from 'app/components/Common';
 import * as ACTIONS from 'app/actions/appActions';
 import {deleteStorageItem} from 'app/functions';
 
-class HeaderContainer extends React.Component {
+export class HeaderContainer extends React.Component {
     handleClickLogout = () => {
         this.props.dispatch(ACTIONS.logout());
         deleteStorageItem(sessionStorage, 'user');
@@ -37,7 +37,7 @@ if(process.env.NODE_ENV !== 'production') {
     };
 }
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     return {
         currentUser : state.currentUser
     }

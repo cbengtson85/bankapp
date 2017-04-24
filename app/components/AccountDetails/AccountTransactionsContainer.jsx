@@ -4,13 +4,14 @@ import {connect} from 'react-redux';
 
 import {AccountTransactions} from 'app/components/AccountDetails';
 import * as ACTIONS from 'app/actions/appActions';
+import config from 'app/config';
 
 class AccountTransactionsContainer extends React.Component {
     render() {
         const {transactionList, pageIndex, paginationChange} = this.props;
         return (
             <AccountTransactions transactionList={transactionList} pageIndex={pageIndex}
-                paginationChange={paginationChange}/>
+                paginationChange={paginationChange} maxItemsPerPage={config.pagination} />
         )
     }
 }

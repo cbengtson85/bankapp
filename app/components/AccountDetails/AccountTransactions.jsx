@@ -5,14 +5,13 @@ import {Table, Segment, Header} from 'semantic-ui-react';
 import {TransactionRowContainer} from 'app/components/AccountDetails';
 import {Pagination} from 'app/components/Common';
 
-import config from 'app/config';
 
 class AccountTransactions extends React.Component {
     handleNextClick = e => {
         e.preventDefault();
-        const {transactionList, pageIndex, paginationChange} = this.props;
+        const {transactionList, pageIndex, paginationChange, maxItemsPerPage} = this.props;
         const tlength = transactionList.length;
-        const maxPages = Math.ceil(tlength / config.pagination);
+        const maxPages = Math.ceil(tlength / maxItemsPerPage);
         if(pageIndex < maxPages)
             paginationChange(1);
     }
@@ -24,21 +23,19 @@ class AccountTransactions extends React.Component {
     }
 
     render() {
-        const {transactionList, headings, pageIndex} = this.props;
+        const {transactionList, headings, pageIndex, maxItemsPerPage} = this.props;
         const tlength = transactionList.length;
-        const page = config.pagination;
-        const maxPages = Math.ceil(tlength / page);
+        const maxPages = Math.ceil(tlength / maxItemsPerPage);
         let displayedList = transactionList;
-        if(tlength > config.pagination ) {
-            const start = (pageIndex-1) * page;
-            const end = start + page;
+        if(tlength > maxItemsPerPage) {
+            const start = (pageIndex-1) * maxItemsPerPage;
+            const end = start + maxItemsPerPage;
             displayedList = transactionList.slice(start,end);
         }
-
         return (
             <Segment>
                 <Segment basic floated="left"><Header as="h2">Transactions</Header></Segment>
-                {tlength > config.pagination ?
+                {tlength > maxItemsPerPage ?
                     <Segment size="small" floated="right" basic>
                         <Pagination pageIndex={pageIndex} maxPages={maxPages} handlePrev={this.handlePrevClick}
                             handleNext={this.handleNextClick} />
@@ -72,10 +69,10 @@ class AccountTransactions extends React.Component {
 if(process.env.NODE_ENV !== 'production') {
     AccountTransactions.propTypes = {
         transactionList : PropTypes.array,
-        transactionEntries : PropTypes.object,
         headings : PropTypes.array,
         pageIndex : PropTypes.number,
-        paginationChange : PropTypes.func
+        paginationChange : PropTypes.func,
+        maxItemsPerPage : PropTypes.number
     };
 }
 
