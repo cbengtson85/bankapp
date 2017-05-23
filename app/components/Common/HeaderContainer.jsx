@@ -21,7 +21,7 @@ export class HeaderContainer extends React.Component {
         return (
             <header>
                 <Header color="blue" dividing as="h1" textAlign="center">
-                    <Link to="/" className="blue">Kustomer Bank App</Link>
+                    <Link to="/" className="blue">Bank App</Link>
                 </Header>
                 {currentUser ? <Logout handleClick={this.handleClickLogout} /> : null}
             </header>

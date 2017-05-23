@@ -1,7 +1,7 @@
 {
-  "name": "kustomer",
+  "name": "bankapp",
   "version": "1.0.0",
-  "description": "Kustomer coding challenge bank app",
+  "description": "bank app",
   "scripts": {
     "test": "cross-env NODE_PATH=. NODE_ENV=test nyc mocha --compilers js:babel-core/register -r test/setup.js test/**",
     "build": "webpack --progress",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cbengtson85/kustomer.git"
+    "url": "git+https://github.com/cbengtson85/bankapp.git"
   },
   "author": "cbengtson85",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cbengtson85/kustomer/issues"
+    "url": "https://github.com/cbengtson85/bankapp/issues"
   },
-  "homepage": "https://github.com/cbengtson85/kustomer#readme",
+  "homepage": "https://github.com/cbengtson85/bankapp#readme",
   "nyc": {
     "require": [
       "babel-register"

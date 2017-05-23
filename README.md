@@ -1,4 +1,4 @@
-# Kustomer coding challenge
+# Example Bank App
 
 This app allows you to create a user/login with a default bank account and deposit to and withdraw from it.  Browser local storage is being used to save user/account info.
 
@@ -14,7 +14,7 @@ Steps to run the app (Node v5 or greater and NPM must be installed):
 
 1) clone repository
 
-        git clone https://github.com/cbengtson85/kustomer.git
+        git clone https://github.com/cbengtson85/bankapp.git
 
 2) cd into project root and run the following to install dependencies
 

@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry : {
-        kustomer : ['./app/entry/app-entry.js']
+        bankapp : ['./app/entry/app-entry.js']
     },
     output : {
         path :  path.resolve(__dirname, 'static/js'),
