@@ -78,9 +78,7 @@ class Home extends React.Component {
     }
 
     handleKeyUp = (e) => {
-        if(e.which == 39) {
-            console.log(555, this.state.picIndex);
-            
+        if(e.which == 39) {            
             if(this.state.picIndex < this.state.picList.length) {
                 this.handleAdvance()
             }
@@ -119,9 +117,7 @@ class Home extends React.Component {
         addEventListener('keyup', this.handleKeyUp);
     }
 
-    componentDidUpdate() {
-        console.log(888888, this.state.picIndex, this.state.picList.length);
-        
+    componentDidUpdate() {        
         if(this.state.picIndex >= this.state.picList.length) {
             location.reload();
         }
