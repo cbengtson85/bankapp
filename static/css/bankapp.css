@@ -37,3 +37,47 @@ header {
     opacity: .3;
     cursor: default;
 }
+
+
+/* Fallback stuff */
+progress[value] {
+    appearance: none;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25) inset;
+    color: dodgerblue;
+    display: inline;
+    height: 10px;
+    order: 1;
+    position: relative;
+    width: 100%;
+  }
+  
+  /* WebKit styles */
+  progress[value]::-webkit-progress-bar {
+    background-color: whiteSmoke;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25) inset;
+  }
+  
+  progress[value]::-webkit-progress-value {
+    background-image: linear-gradient(to right, #00c8ff, #8605e2);
+    border-radius: 3px;
+    position: relative;
+    transition: width 0.5s linear;
+  }
+  
+
+  figcaption {
+    align-items: center;
+    background: #cccccc;
+    display: grid;
+    padding: 2px;
+  }
+
+  #cont {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    left: 0px;
+  }
