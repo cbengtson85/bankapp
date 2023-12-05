@@ -158,6 +158,22 @@ class Home extends React.Component {
             )
         }
     }
+
+    getDate = (fileName) => {
+        try {
+            const dateStr = fileName.split('_')[0]
+            
+            const year   = dateStr.substring(0, 4);
+            const month  = dateStr.substring(4, 6);
+            const day    = dateStr.substring(6, 8);
+            
+            const abc = Date.parse(year+ '-' + month + '-' + day);
+            
+            return (new Date(abc)).toDateString()
+        } catch (error) {
+            return ''
+        }
+    }
     render() {
         const { picList, picIndex} = this.state;
         if(!picList.length) {
@@ -180,6 +196,8 @@ class Home extends React.Component {
                 ...fadeIn
             }
         }
+
+        const date = this.getDate(fileName)
         return (
             <div>
                 {isImage ?
@@ -206,6 +224,11 @@ class Home extends React.Component {
                         </span>
                     )
                 }   
+                {!!date && (
+                    <div id='date'>
+                        {date}
+                    </div>
+                )}
             </div>
         )
     }
