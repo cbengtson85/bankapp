@@ -81,3 +81,17 @@ progress[value] {
     width: 100%;
     left: 0px;
   }
+
+  #date {
+    position: fixed;
+    bottom: 35px;
+    right: 30px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    font-size: 35px;
+  }
