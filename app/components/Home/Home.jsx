@@ -39,6 +39,8 @@ class Home extends React.Component {
 
     timeout = null;
 
+    videoInterval = null;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -71,14 +73,25 @@ class Home extends React.Component {
                 this.handleAdvance()
             }
         }, 4000);
+        clearInterval(this.videoInterval)
     }
 
     handleVideoStart = () => {
         clearInterval(this.interval);
+        clearInterval(this.videoInterval)
+
+        const progress = document.getElementById('progress');
+        const video = document.getElementById('vid');
+    
+        this.videoInterval = setInterval(function () {
+            progress.value = Math.round(
+            (video.currentTime / video.duration) * 100 + 4
+        );
+        }, 200);
     }
 
     handleKeyUp = (e) => {
-        if(e.which == 39) {            
+        if(e.which == 39) {
             if(this.state.picIndex < this.state.picList.length) {
                 this.handleAdvance()
             }
@@ -117,7 +130,7 @@ class Home extends React.Component {
         addEventListener('keyup', this.handleKeyUp);
     }
 
-    componentDidUpdate() {        
+    componentDidUpdate() {
         if(this.state.picIndex >= this.state.picList.length) {
             location.reload();
         }
@@ -180,9 +193,15 @@ class Home extends React.Component {
                     : 
                     (
                         <span>
-                        <video onPlay={this.handleVideoStart} onEnded={this.handleVideoEnd} style={styling} key={fileName} playsInline autoPlay muted>
+                        <video id="vid" onPlay={this.handleVideoStart} onEnded={this.handleVideoEnd} style={styling} key={fileName} playsInline autoPlay muted>
                             <source src={fileName} type="video/mp4" />
                         </video>
+                        <span id="cont">
+                        <figcaption>
+                        <progress key={fileName + '1'} id="progress" max="100" value="0">Progress</progress>
+                        </figcaption>
+                            
+                            </span>
                         {this.showNextImage()}
                         </span>
                     )
