@@ -140,7 +140,8 @@ class Home extends React.Component {
         if(!fileName) {
             return true
         }
-        return (fileName.indexOf('.jpg') > -1 || fileName.indexOf('.jpeg') > -1 || fileName.indexOf('.webp') > -1);
+//*******************************************************************
+        return (fileName.indexOf('.JPG') > -1 || fileName.indexOf('.jpg') > -1 || fileName.indexOf('.jpeg') > -1 || fileName.indexOf('.webp') > -1);
     }
 
     showPreviousImage = () => {
