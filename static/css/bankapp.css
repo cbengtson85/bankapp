@@ -86,12 +86,12 @@ progress[value] {
     position: fixed;
     bottom: 35px;
     right: 30px;
-    padding: 25px;
+    padding: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
     color: white;
     background: rgba(0, 0, 0, 0.6);
-    font-size: 35px;
+    font-size: 40px;
   }
