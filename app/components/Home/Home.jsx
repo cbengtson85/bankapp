@@ -1,6 +1,6 @@
 import React from 'react';
 
-const slideShowTimeout = 25 * 1000;
+const slideShowTimeout = 5 * 1000;
 
 const imgStyle = {
     maxWidth: '100%',
@@ -17,13 +17,13 @@ const imgStyle = {
 
 const fadeOut = {
     opacity: 0.1,
-    transition: 'visibility 0s 0.3s, opacity 0.3s linear'
+    transition: 'visibility 0s 0.4s, opacity 0.4s linear'
 }
 
 const fadeIn = {
     visibility: 'visible',
     opacity: 1,
-    transition: 'opacity 0.6s linear'
+    transition: 'opacity 0.5s linear'
 }
 
 
@@ -61,7 +61,7 @@ class Home extends React.Component {
             if(!shouldNotSetUp) {
                 this.setUpInterval();
             }
-        }, 400);
+        }, 500);
 
         this.setState({addFade: true})
         
@@ -72,7 +72,7 @@ class Home extends React.Component {
             if(this.state.picIndex < this.state.picList.length) {
                 this.handleAdvance()
             }
-        }, 4000);
+        }, 3000);
         clearInterval(this.videoInterval)
     }
 
@@ -130,8 +130,8 @@ class Home extends React.Component {
         addEventListener('keyup', this.handleKeyUp);
     }
 
-    componentDidUpdate() {
-        if(this.state.picIndex >= this.state.picList.length) {
+    componentWillUpdate(nextProps, nextState) {
+        if(nextState.picIndex >= nextState.picList.length) {
             location.reload();
         }
     }
@@ -140,48 +140,33 @@ class Home extends React.Component {
         if(!fileName) {
             return true
         }
-//*******************************************************************
-        return (fileName.indexOf('.JPG') > -1 || fileName.indexOf('.jpg') > -1 || fileName.indexOf('.jpeg') > -1 || fileName.indexOf('.webp') > -1);
-    }
-
-    showPreviousImage = () => {
-        if(this.state.picIndex - 1 >= 0 && this.isImage(this.state.picList[this.state.picIndex -1])) {
-            return (
-                <img style={{...imgStyle, ...fadeOut}} src={this.state.picList[this.state.picIndex - 1]}/>
-            )
-        }
+        return (fileName.indexOf('.JPG') > -1 || fileName.indexOf('.jpg') > -1 || fileName.indexOf('.jpeg') > -1 || fileName.indexOf('.webp') > -1 || fileName.indexOf('.png') > -1 || fileName.indexOf('.PNG') > -1);
     }
 
     showNextImage = () => {
-        if(this.state.picIndex + 1 <= this.state.picList.length && this.isImage(this.state.picList[this.state.picIndex + 1])) {
-            return (
-                <img style={{...imgStyle, ...hide}} src={this.state.picList[this.state.picIndex + 1]}/>
-            )
+        if(this.state.picIndex + 1 <= this.state.picList.length && this.state.picList[this.state.picIndex + 1]) {
+            const filename = this.state.picList[this.state.picIndex + 1].src;
+            if(this.isImage(filename)) {
+                return (
+                    <img style={{...imgStyle, ...hide}} src={filename}/>
+                )
+            }
         }
     }
 
-    getDate = (fileName) => {
-        try {
-            const dateStr = fileName.split('_')[0]
-            
-            const year   = dateStr.substring(0, 4);
-            const month  = dateStr.substring(4, 6);
-            const day    = dateStr.substring(6, 8);
-            
-            const abc = Date.parse(year+ '-' + month + '-' + day);
-            
-            return (new Date(abc)).toDateString()
-        } catch (error) {
-            return ''
-        }
-    }
     render() {
         const { picList, picIndex} = this.state;
         if(!picList.length) {
             return null;
         }
+        
 
-        const fileName = picList[picIndex];
+        const fileObj = picList[picIndex];
+        const fileName = fileObj.src;
+        const date = fileObj.date;
+        const location1 = fileObj.location1;
+        const location2 = fileObj.location2;
+        
         const isImage = this.isImage(fileName)
         
 
@@ -198,7 +183,6 @@ class Home extends React.Component {
             }
         }
 
-        const date = this.getDate(fileName)
         return (
             <div>
                 {isImage ?
@@ -227,7 +211,23 @@ class Home extends React.Component {
                 }   
                 {!!date && (
                     <div id='date'>
-                        {date}
+                        {!!location2 &&
+                        (
+                            <span id="location2">
+                                {location2}
+                            </span>
+                        )
+                        }
+                        {!!location1 &&
+                            (
+                                <span id="location1">
+                                    {location1}
+                                </span>
+                            )
+                        }
+                         <span id="date1">
+                            {date}
+                         </span>
                     </div>
                 )}
             </div>
