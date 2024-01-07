@@ -83,15 +83,46 @@ progress[value] {
   }
 
   #date {
+    font-family: Arial, Helvetica, sans-serif;
     position: fixed;
     bottom: 35px;
-    right: 30px;
-    padding: 15px;
+    right: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
+    flex-direction: column;
     color: white;
+   
+  }
+
+  #location2 {
+    display: flex;
+    font-size: 35px;
+    line-height: 35px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+  }
+
+  #location1 {
+    display: flex;
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+  }
+
+  #date1 {
+    border-radius: 20px;
+    display: flex;
+    line-height: 40px;
+    margin-left: auto;
     background: rgba(0, 0, 0, 0.6);
     font-size: 40px;
+    padding: 10px;
   }
