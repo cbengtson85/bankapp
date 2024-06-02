@@ -28,9 +28,24 @@ app.get('/pics', (req, res) => {
             const month  = dateStr.substring(4, 6);
             const day    = dateStr.substring(6, 8);
             
-            const abc = Date.parse(year+ '-' + month + '-' + day);
-            
-            return (new Date(abc)).toDateString()
+
+            const monthMap = {
+                '01': 'Ene',
+                '02': 'Feb',
+                '03': 'Mar',
+                '04': 'Abr',
+                '05': 'May',
+                '06': 'Jun',
+                '07': 'Jul',
+                '08': 'Ago',
+                '09': 'Sep',
+                '10': 'Oct',
+                '11': 'Nov',
+                '12': 'Dic'
+
+            };
+
+            return `${monthMap[month]} ${day} ${year}`;
         } catch (error) {
             return ''
         }
@@ -43,16 +58,17 @@ app.get('/pics', (req, res) => {
             if (fs.statSync(absolute).isDirectory()) {
                 getFilesRecursively(absolute);
             } else {
-                if(file.indexOf('.DS_Store') < 0) {
-
+                if(file.indexOf('.DS_Store') < 0 && !file.startsWith('.')) {
                     let filepath = absolute.split('/pics/')[1];
                     if(!filepath) {
                         filepath = absolute.split('\\pics\\')[1];
                     }
                     let fileArrSplit = filepath.split('/');
-                    if(!fileArrSplit) {
+
+                    if(fileArrSplit.length < 2) {
                         fileArrSplit = filepath.split('\\');
                     }
+
                     let loc1 = fileArrSplit[fileArrSplit.length - 2]
                     let loc2 = fileArrSplit[fileArrSplit.length - 3]
 
@@ -62,8 +78,13 @@ app.get('/pics', (req, res) => {
                         loc2 = loc2.slice(0, -5)
                     }
 
+                    let source = absolute.split('/pics/')[1];
+                    if(!absolute.split('/pics/')[1]) {
+                        source = absolute.split('\\pics\\')[1]
+                    }
+
                     const fileObj = {
-                        src: absolute.split('/pics/')[1],
+                        src: source,
                         date: getDate(file),
                         location1: loc1,
                         location2: loc2
@@ -73,10 +94,10 @@ app.get('/pics', (req, res) => {
             }
         }
     };
-    getFilesRecursively(path.resolve('./pics'))
+    getFilesRecursively(path.resolve('pics'))
 
     res.json({
-        files: lodash.shuffle(lodash.shuffle(lodash.shuffle(filesObj)))
+        files: lodash.shuffle(lodash.shuffle(lodash.shuffle(lodash.shuffle(filesObj)).reverse()))
     })
 })
 
