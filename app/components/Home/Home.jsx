@@ -1,6 +1,7 @@
 import React from 'react';
 
-const slideShowTimeout = 5 * 1000;
+const slideShowSeconds = 30;
+const slideShowTimeout = slideShowSeconds * 1000;
 
 const imgStyle = {
     maxWidth: '100%',
@@ -16,14 +17,14 @@ const imgStyle = {
 }
 
 const fadeOut = {
-    opacity: 0.1,
-    transition: 'visibility 0s 0.4s, opacity 0.4s linear'
+    opacity: 0.04,
+    transition: 'visibility 0s 0.35s, opacity 0.35s linear'
 }
 
 const fadeIn = {
     visibility: 'visible',
     opacity: 1,
-    transition: 'opacity 0.5s linear'
+    transition: 'opacity 0.7s linear'
 }
 
 
@@ -41,17 +42,21 @@ class Home extends React.Component {
 
     videoInterval = null;
 
+    picInterval = null;
+
     constructor(props) {
         super(props);
         this.state = {
             picList: [],
             picIndex: 0,
-            addFade: false
+            addFade: false,
+            picIntervalMs: 0
         }
     }
 
     handleAdvance = (shouldNotSetUp) => {
         clearTimeout(this.timeout);
+        clearInterval(this.picInterval)
  
         this.timeout = setTimeout(() => {
             this.setState((prevState) => ({ 
@@ -61,10 +66,10 @@ class Home extends React.Component {
             if(!shouldNotSetUp) {
                 this.setUpInterval();
             }
-        }, 500);
+        }, 380);
 
-        this.setState({addFade: true})
-        
+        this.setState({addFade: true, picIntervalMs: 0});
+        this.setUpPicInterval();
     }
 
     handleVideoEnd = () => {
@@ -84,9 +89,7 @@ class Home extends React.Component {
         const video = document.getElementById('vid');
     
         this.videoInterval = setInterval(function () {
-            progress.value = Math.round(
-            (video.currentTime / video.duration) * 100 + 4
-        );
+            progress.value = (video.currentTime / video.duration) * 100 + 4
         }, 200);
     }
 
@@ -105,6 +108,22 @@ class Home extends React.Component {
             }
         }
         
+    }
+
+    setUpPicInterval = () => {
+        clearInterval(this.picInterval);
+        this.picInterval = setInterval(() => {
+            const fileObj = this.state.picList[this.state.picIndex];
+
+            if(fileObj && fileObj.src) {
+                const fileName = fileObj.src;
+                if(this.isImage(fileName)) {
+                    this.setState((prevState) => ({ 
+                        picIntervalMs: prevState.picIntervalMs + 300 
+                    }))
+                }
+            }
+        }, 300);
     }
 
     setUpInterval = () => {
@@ -131,7 +150,7 @@ class Home extends React.Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if(nextState.picIndex >= nextState.picList.length) {
+        if(nextState.picIndex + 1 >= nextState.picList.length) {
             location.reload();
         }
     }
@@ -159,9 +178,14 @@ class Home extends React.Component {
         if(!picList.length) {
             return null;
         }
-        
 
         const fileObj = picList[picIndex];
+
+        if(!fileObj || !fileObj.src) {
+            console.log(1111, picIndex, picList)
+            location.reload();
+        }
+
         const fileName = fileObj.src;
         const date = fileObj.date;
         const location1 = fileObj.location1;
@@ -182,9 +206,17 @@ class Home extends React.Component {
                 ...fadeIn
             }
         }
-
+        
+        let imagePercent = Math.round(this.state.picIntervalMs / (slideShowSeconds * 1000) * 100);
+        if(imagePercent > 99) {
+            imagePercent = 100;
+        }
+        
         return (
             <div>
+                <div id='index'>
+                    {`${picIndex + 1}`}
+                </div>
                 {isImage ?
                 (
                     <span>
@@ -228,6 +260,11 @@ class Home extends React.Component {
                          <span id="date1">
                             {date}
                          </span>
+                         {!!isImage &&
+                         <div key={picIndex} id="isimage">
+                            <div key={picIndex} id="insideimage" style={{width: `${imagePercent}%`}}></div>
+                         </div>
+                         }
                     </div>
                 )}
             </div>
